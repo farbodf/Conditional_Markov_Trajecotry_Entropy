@@ -66,7 +66,12 @@ def get_ad(matrix, dst):
     :return: the vector ad, each element 'i' in ad corresponds to the probability from state 'i' the path get trapped
      in the destination state
     """
-    ad = np.real(scipy.linalg.eig(matrix)[1][:, destination])
+    eigen = scipy.linalg.eig(matrix)
+    ad = np.real(eigen[1][:, np.real(eigen[0]) == 1])
+    if ad[dst, 0] != 0:
+        ad = ad[:, 0]
+    else:
+        ad = ad[:, 1]
     ad = ad * 1/ad[dst]
     return ad
 

@@ -2,7 +2,7 @@
 Author: Farbod Faghihi
 
 This code computes the entropy of a markov trajectory conditioned on visiting some intermediate states on the way
- before reaching the destination state.
+before reaching the destination state.
 
 The entropy of the whole markov trajectories were done before based on the following paper:
 

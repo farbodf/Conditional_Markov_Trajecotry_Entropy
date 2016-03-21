@@ -53,6 +53,8 @@ def get_segment_entropy(probability_transition_matrix, start, end):
     temp_mat = np.linalg.pinv(temp_mat)
     l_ent = local_entropy(p_matrix)
     H_sd = 0
+    if end < start:
+        start -= 1
     for i in range(len(indicies)):
         H_sd += (temp_mat[start, i]*l_ent[indicies[i]])[0]
     return H_sd

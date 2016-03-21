@@ -68,10 +68,10 @@ def get_ad(matrix, dst):
     """
     eigen = scipy.linalg.eig(matrix)
     ad = np.real(eigen[1][:, np.real(eigen[0]) == 1])
-    if ad[dst, 0] != 0:
-        ad = ad[:, 0]
-    else:
-        ad = ad[:, 1]
+    for i in range(ad.shape[1]):
+        if ad[dst, i] != 0:
+            ad = ad[:, i]
+            break
     ad = ad * 1/ad[dst]
     return ad
 

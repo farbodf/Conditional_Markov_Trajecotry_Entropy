@@ -44,19 +44,13 @@ def get_segment_entropy(probability_transition_matrix, start, end):
     in the probability matrix are absorbing
     """
     p_matrix = probability_transition_matrix.copy()
-    subset = np.array([x for x in range(p_matrix.shape[0]) if x != end])
-    qd = p_matrix[subset]
-    qd = qd[:, subset]
-    indicies = range(p_matrix.shape[0])
-    indicies = [x for x in indicies if x != end]
+    qd = p_matrix[0:(p_matrix.shape[0]-1), 0:(p_matrix.shape[1]-1)]
     temp_mat = np.identity(qd.shape[0]) - qd
     temp_mat = np.linalg.pinv(temp_mat)
     l_ent = local_entropy(p_matrix)
     H_sd = 0
-    if end < start:
-        start -= 1
-    for i in range(len(indicies)):
-        H_sd += (temp_mat[start, i]*l_ent[indicies[i]])[0]
+    for i in range(qd.shape[0]):
+        H_sd += (temp_mat[start, i]*l_ent[i])[0]
     return H_sd
 
 
@@ -160,5 +154,5 @@ if __name__ == "__main__":
         else:
             intermediate_states.append(entry)
     value = conditional_trajectory_entropy(P, source, destination, intermediate_states)
-    value = value if value > 0.0000000001 else 0
+    # value = value if value > 0.0000000001 else 0
     print(value)
